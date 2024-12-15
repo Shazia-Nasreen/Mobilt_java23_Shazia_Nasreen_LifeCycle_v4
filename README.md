@@ -8,3 +8,4 @@ RegistrationActivity: Users can create an account in this activity by entering a
 FormActivity: Once logged in, the user is directed to the FormActivity, where they can fill out a form with personal information such as age, email, gender, and license status. The form data is saved in SharedPreferences, and a confirmation message is displayed upon successful data submission.
 
 Additionally, the app includes a Logout feature, where the user can log out by clearing the login status from SharedPreferences, ensuring a secure and smooth user experience.
+![mindmap](https://github.com/user-attachments/assets/102a8903-b261-4556-a213-194c1f38ade0)

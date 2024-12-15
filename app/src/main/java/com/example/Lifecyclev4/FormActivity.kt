@@ -18,17 +18,22 @@ class FormActivity : AppCompatActivity() {
         val hasLicenseCheck = findViewById<CheckBox>(R.id.checkBoxLicense)
         val submitButton = findViewById<Button>(R.id.buttonSubmitForm)
         val radioGroup = findViewById<RadioGroup>(R.id.radioGroupGender)
+        val logoutButton = findViewById<Button>(R.id.buttonLogout) // Add reference to the logout button
 
         sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
 
-        // Spara formulärdata
+        // Handle form submission
         submitButton.setOnClickListener {
             val age = ageInput.text.toString()
             val email = emailInput.text.toString()
             val hasLicense = hasLicenseCheck.isChecked
-            val selectedGender = findViewById<RadioButton>(
-                radioGroup.checkedRadioButtonId
-            )?.text.toString()
+            val selectedGender = findViewById<RadioButton>(radioGroup.checkedRadioButtonId)?.text.toString()
+
+            // Simple validation for the form data
+            if (age.isEmpty() || email.isEmpty()) {
+                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             sharedPreferences.edit().apply {
                 putString("age", age)
@@ -39,6 +44,17 @@ class FormActivity : AppCompatActivity() {
             }
 
             Toast.makeText(this, "Data saved!", Toast.LENGTH_SHORT).show()
+        }
+
+        // Handle logout
+        logoutButton.setOnClickListener {
+            // Set loggedIn to false to log out
+            sharedPreferences.edit().putBoolean("loggedIn", false).apply()
+
+            // Redirect to LoginActivity
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()  // Close FormActivity so the user can't go back to it
         }
     }
 }
